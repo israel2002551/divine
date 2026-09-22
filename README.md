@@ -157,14 +157,14 @@ The web command center offers three modes of manual locomotion:
 5. Open Serial Monitor at **115200 baud** to observe connection to `broker.emqx.io`.
 
 ### 2. Launching the Web Command Center
-Open [web/index.html](file:///c:/Users/USER/promise/promise/web/index.html) in any modern web browser.
+Open [index.html](file:///c:/Users/USER/promise/promise/index.html) directly in any modern web browser or deploy with GitHub Pages.
 
 You can also run a local server:
 ```bash
 # Python
-python -m http.server 8000 --directory web
+python -m http.server 8000
 
 # Node.js
-npx serve web
+npx serve .
 ```
 Then navigate to `http://localhost:8000`.
