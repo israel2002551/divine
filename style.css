@@ -1,13 +1,13 @@
 /* ==========================================================================
    HELIOCLEAN SOLAR ROBOT COMMAND CENTER STYLESHEET
-   Design Language: Deep Dark High-Tech Glassmorphism & Vibrant Neon Accents
+   Responsive Dark Cyberpunk Glassmorphism Design System
    ========================================================================== */
 
 :root {
     --bg-base: #0a0e14;
     --bg-surface: #121820;
-    --bg-card: rgba(22, 30, 41, 0.75);
-    --bg-card-hover: rgba(28, 38, 52, 0.85);
+    --bg-card: rgba(22, 30, 41, 0.78);
+    --bg-card-hover: rgba(28, 38, 52, 0.88);
     --border-card: rgba(255, 255, 255, 0.08);
     --border-active: rgba(0, 230, 118, 0.4);
 
@@ -23,12 +23,14 @@
     --accent-red: #ff1744;
     --accent-red-glow: rgba(255, 23, 68, 0.35);
 
-    --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 18px;
+    --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
     --radius-full: 9999px;
+
     --shadow-card: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
     --shadow-glow: 0 0 15px var(--accent-green-glow);
     --backdrop-blur: blur(14px);
@@ -42,12 +44,16 @@
     user-select: none;
 }
 
+html {
+    font-size: 16px;
+}
+
 body {
     font-family: var(--font-ui);
     background-color: var(--bg-base);
     background-image: 
-        radial-gradient(circle at 10% 15%, rgba(0, 176, 255, 0.07) 0%, transparent 40%),
-        radial-gradient(circle at 90% 85%, rgba(0, 230, 118, 0.05) 0%, transparent 40%);
+        radial-gradient(circle at 10% 15%, rgba(0, 176, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 85%, rgba(0, 230, 118, 0.06) 0%, transparent 40%);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -56,13 +62,17 @@ body {
     overflow-x: hidden;
 }
 
+/* ==========================================================================
+   APP CONTAINER & LAYOUT
+   ========================================================================== */
 .app-container {
     width: 100%;
     max-width: 1100px;
-    padding: 16px 20px 30px;
+    margin: 0 auto;
+    padding: clamp(10px, 2.5vw, 24px);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: clamp(10px, 2vw, 16px);
 }
 
 /* ==========================================================================
@@ -72,53 +82,56 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 18px;
+    padding: clamp(10px, 1.8vw, 14px) clamp(12px, 2.2vw, 20px);
     background: var(--bg-card);
     backdrop-filter: var(--backdrop-blur);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .brand-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: clamp(34px, 5vw, 42px);
+    height: clamp(34px, 5vw, 42px);
     background: rgba(255, 179, 0, 0.12);
     border: 1px solid rgba(255, 179, 0, 0.3);
     border-radius: 10px;
     color: var(--accent-amber);
+    flex-shrink: 0;
 }
 
 .brand-text h1 {
-    font-size: 1.25rem;
+    font-size: clamp(1.1rem, 2.8vw, 1.35rem);
     font-weight: 800;
     letter-spacing: 1.5px;
     color: #fff;
-    line-height: 1.2;
+    line-height: 1.15;
 }
 
 .brand-text .subtext {
-    font-size: 0.65rem;
+    font-size: clamp(0.58rem, 1.6vw, 0.68rem);
     font-weight: 600;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
     color: var(--text-secondary);
+    display: block;
 }
 
 .status-bar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .status-pill {
@@ -127,18 +140,19 @@ body {
     gap: 6px;
     background: rgba(0, 0, 0, 0.35);
     border: 1px solid var(--border-card);
-    padding: 6px 12px;
+    padding: 5px 10px;
     border-radius: var(--radius-full);
-    font-size: 0.75rem;
+    font-size: clamp(0.68rem, 1.8vw, 0.75rem);
     font-family: var(--font-mono);
 }
 
 .status-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #757575;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
 }
 
 .status-dot.connected {
@@ -179,6 +193,7 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .settings-btn:hover {
@@ -197,7 +212,7 @@ body {
     background: linear-gradient(90deg, rgba(255, 23, 68, 0.25) 0%, rgba(255, 23, 68, 0.1) 100%);
     border: 1px solid var(--accent-red);
     box-shadow: 0 0 20px var(--accent-red-glow);
-    padding: 12px 18px;
+    padding: 10px 16px;
     border-radius: var(--radius-md);
     animation: alertPulse 1.2s infinite alternate;
 }
@@ -207,7 +222,8 @@ body {
 }
 
 .alert-icon {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    flex-shrink: 0;
 }
 
 .alert-content {
@@ -217,23 +233,23 @@ body {
 }
 
 .alert-content strong {
-    font-size: 0.9rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
     color: #ff5252;
     letter-spacing: 0.5px;
 }
 
 .alert-content span {
-    font-size: 0.78rem;
+    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
     color: #ffdce0;
 }
 
 /* ==========================================================================
-   DASHBOARD GRID & CARDS
+   DASHBOARD CARDS
    ========================================================================== */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: clamp(10px, 2vw, 16px);
 }
 
 .card {
@@ -242,22 +258,24 @@ body {
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
-    padding: 20px;
+    padding: clamp(12px, 2.2vw, 20px);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
 }
 
 .card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .card-header h2 {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 2.2vw, 1rem);
     font-weight: 700;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -266,64 +284,78 @@ body {
 
 .live-tag {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
     background: rgba(0, 230, 118, 0.12);
     border: 1px solid var(--accent-green);
     color: var(--accent-green);
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: var(--radius-full);
 }
 
+.section-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
 /* ==========================================================================
-   SECTION 1: TELEMETRY & SENSORS
+   SECTION 1: TELEMETRY & SENSORS DECK
    ========================================================================== */
 .telemetry-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
 }
 
 .telemetry-item {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.28);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
-    padding: 14px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    min-width: 0;
 }
 
 .metric-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 6px;
 }
 
 .metric-label {
-    font-size: 0.7rem;
+    font-size: clamp(0.62rem, 1.6vw, 0.7rem);
     font-weight: 700;
     color: var(--text-secondary);
     letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .metric-val {
     font-family: var(--font-mono);
-    font-size: 1.15rem;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
     font-weight: 700;
     color: #fff;
+    white-space: nowrap;
 }
 
 .metric-sub {
-    font-size: 0.7rem;
+    font-size: clamp(0.62rem, 1.5vw, 0.7rem);
     color: var(--text-muted);
     font-family: var(--font-mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* Gauge Bar */
+/* Battery Gauge */
 .gauge-bar-bg {
     width: 100%;
-    height: 8px;
+    height: 7px;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 4px;
     overflow: hidden;
@@ -336,13 +368,13 @@ body {
     transition: width 0.4s ease, background-color 0.4s ease;
 }
 
-/* Signal Bars */
+/* Wi-Fi RSSI Bars */
 .signal-bars {
     display: flex;
     align-items: flex-end;
     gap: 4px;
     height: 14px;
-    margin: 4px 0;
+    margin: 2px 0;
 }
 
 .signal-bars .bar {
@@ -358,27 +390,22 @@ body {
 .signal-bars.good .bar-1,
 .signal-bars.good .bar-2,
 .signal-bars.good .bar-3,
-.signal-bars.good .bar-4 {
-    background: var(--accent-green);
-}
+.signal-bars.good .bar-4 { background: var(--accent-green); }
 
 .signal-bars.medium .bar-1,
 .signal-bars.medium .bar-2,
-.signal-bars.medium .bar-3 {
-    background: var(--accent-amber);
-}
+.signal-bars.medium .bar-3 { background: var(--accent-amber); }
 
-.signal-bars.weak .bar-1 {
-    background: var(--accent-red);
-}
+.signal-bars.weak .bar-1 { background: var(--accent-red); }
 
-/* Sensor Badges & Boxes */
+/* Badges */
 .status-badge {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 800;
-    padding: 3px 8px;
+    padding: 2px 7px;
     border-radius: var(--radius-full);
     font-family: var(--font-mono);
+    white-space: nowrap;
 }
 
 .badge-ok {
@@ -398,13 +425,14 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
 }
 
+/* Edge Sensor Duo */
 .edge-sensor-duo {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .edge-sensor-box {
@@ -412,20 +440,20 @@ body {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid var(--border-card);
     border-radius: 4px;
-    padding: 6px;
+    padding: 4px 6px;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 1px;
 }
 
 .edge-sensor-box span {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     color: var(--text-muted);
 }
 
 .edge-sensor-box strong {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-family: var(--font-mono);
     color: var(--accent-green);
 }
@@ -440,23 +468,23 @@ body {
 }
 
 /* ==========================================================================
-   MPU6050 IMU & INCLINOMETER WIDGET
+   MPU6050 IMU & ARTIFICIAL HORIZON INCLINOMETER
    ========================================================================== */
 .imu-telemetry-item {
-    grid-column: span 1;
+    min-width: 0;
 }
 
 .imu-display-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin: 4px 0;
+    gap: 10px;
+    margin: 2px 0;
 }
 
 .inclinometer-widget {
     position: relative;
-    width: 68px;
-    height: 68px;
+    width: 60px;
+    height: 60px;
     flex-shrink: 0;
 }
 
@@ -468,7 +496,7 @@ body {
     border: 2px solid var(--border-card);
     position: relative;
     overflow: hidden;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 176, 255, 0.15);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 176, 255, 0.15);
 }
 
 .inclinometer-horizon {
@@ -488,8 +516,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border: 1.5px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     pointer-events: none;
@@ -502,22 +530,22 @@ body {
     background: rgba(255, 255, 255, 0.4);
 }
 .inclinometer-crosshair::before {
-    top: 5px;
-    left: -6px;
-    width: 24px;
+    top: 4px;
+    left: -5px;
+    width: 20px;
     height: 1px;
 }
 .inclinometer-crosshair::after {
-    top: -6px;
-    left: 5px;
+    top: -5px;
+    left: 4px;
     width: 1px;
-    height: 24px;
+    height: 20px;
 }
 
 .inclinometer-bubble {
     position: absolute;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: radial-gradient(circle, #00e676 20%, rgba(0, 230, 118, 0.4) 100%);
     box-shadow: 0 0 8px var(--accent-green);
@@ -530,15 +558,16 @@ body {
 .imu-angles-col {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     flex: 1;
+    min-width: 0;
 }
 
 .angle-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.72rem;
+    font-size: clamp(0.65rem, 1.8vw, 0.72rem);
     font-family: var(--font-mono);
 }
 
@@ -553,7 +582,7 @@ body {
 
 .angle-val-sub {
     color: var(--accent-amber);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 600;
 }
 
@@ -562,20 +591,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.35);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
-    padding: 10px 16px;
+    padding: 8px 12px;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .motor-strip-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: clamp(0.7rem, 1.8vw, 0.78rem);
 }
 
 .strip-label {
@@ -599,9 +628,9 @@ body {
 .toggle-switch-label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--text-secondary);
 }
 
@@ -610,10 +639,10 @@ body {
 }
 
 .slider-switch {
-    width: 34px;
-    height: 18px;
+    width: 32px;
+    height: 16px;
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 9px;
+    border-radius: 8px;
     position: relative;
     transition: background 0.3s ease;
 }
@@ -623,8 +652,8 @@ body {
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #fff;
     transition: transform 0.3s ease;
@@ -638,18 +667,25 @@ body {
     transform: translateX(16px);
 }
 
+/* Dual Throttle Grid: Desktop Layout */
 .dual-throttle-container {
     display: grid;
-    grid-template-columns: 140px 1fr 140px;
-    gap: 20px;
+    grid-template-areas: "left center right";
+    grid-template-columns: clamp(100px, 15vw, 140px) 1fr clamp(100px, 15vw, 140px);
+    gap: clamp(10px, 2vw, 20px);
     align-items: center;
 }
 
-@media (max-width: 768px) {
-    .dual-throttle-container {
-        grid-template-columns: 100px 1fr 100px;
-        gap: 10px;
-    }
+.throttle-column.throttle-left {
+    grid-area: left;
+}
+
+.center-controls-column {
+    grid-area: center;
+}
+
+.throttle-column.throttle-right {
+    grid-area: right;
 }
 
 .throttle-column {
@@ -659,8 +695,9 @@ body {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
-    padding: 14px 10px;
-    gap: 12px;
+    padding: 12px 8px;
+    gap: 10px;
+    width: 100%;
 }
 
 .throttle-header {
@@ -670,7 +707,7 @@ body {
 
 .throttle-name {
     display: block;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     color: var(--text-secondary);
     letter-spacing: 0.5px;
@@ -678,25 +715,26 @@ body {
 
 .throttle-speed {
     font-family: var(--font-mono);
-    font-size: 1.25rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.25rem);
     font-weight: 800;
     color: var(--accent-blue);
 }
 
 .slider-wrapper {
-    height: 220px;
+    height: clamp(170px, 25vh, 220px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    padding: 10px 0;
+    padding: 6px 0;
     width: 100%;
+    touch-action: none;
 }
 
 .slider-limit {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     font-weight: 600;
     color: var(--text-muted);
 }
@@ -705,25 +743,26 @@ body {
     color: var(--accent-amber);
 }
 
-/* Vertical Slider */
+/* Vertical Range Slider */
 .vertical-slider {
     -webkit-appearance: none;
     appearance: none;
-    width: 180px;
-    height: 12px;
+    width: clamp(140px, 20vh, 180px);
+    height: 10px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
+    border-radius: 5px;
     outline: none;
     transform: rotate(-90deg);
     cursor: pointer;
     margin: auto 0;
+    touch-action: none;
 }
 
 .vertical-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: var(--accent-blue);
     box-shadow: 0 0 10px var(--accent-blue-glow);
@@ -734,25 +773,25 @@ body {
 
 .vertical-slider:active::-webkit-slider-thumb {
     cursor: grabbing;
-    transform: scale(1.2);
+    transform: scale(1.18);
     background: var(--accent-green);
     box-shadow: 0 0 15px var(--accent-green-glow);
 }
 
 .throttle-zero-btn {
     width: 100%;
-    padding: 8px 4px;
+    padding: 7px 4px;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border-card);
     border-radius: 6px;
     color: var(--text-secondary);
-    font-size: 0.68rem;
+    font-size: 0.65rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.throttle-zero-btn:hover {
+.throttle-zero-btn:hover, .throttle-zero-btn:active {
     background: rgba(255, 23, 68, 0.2);
     color: #ff5252;
     border-color: var(--accent-red);
@@ -763,7 +802,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    width: 100%;
 }
 
 .control-tabs {
@@ -779,9 +819,9 @@ body {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
-    padding: 6px 14px;
+    padding: 5px 14px;
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -808,19 +848,11 @@ body {
 /* D-Pad Buttons */
 .dpad-grid {
     display: grid;
-    grid-template-columns: repeat(3, 64px);
-    grid-template-rows: repeat(3, 64px);
-    gap: 8px;
+    grid-template-columns: repeat(3, clamp(50px, 12vw, 64px));
+    grid-template-rows: repeat(3, clamp(50px, 12vw, 64px));
+    gap: clamp(4px, 1.2vw, 8px);
     justify-content: center;
-    margin: 4px auto;
-}
-
-@media (max-width: 480px) {
-    .dpad-grid {
-        grid-template-columns: repeat(3, 52px);
-        grid-template-rows: repeat(3, 52px);
-        gap: 6px;
-    }
+    margin: 2px auto;
 }
 
 .dpad-btn {
@@ -828,7 +860,7 @@ body {
     border: 1px solid var(--border-card);
     border-radius: 12px;
     color: #fff;
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -836,6 +868,7 @@ body {
     cursor: pointer;
     transition: all 0.1s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    touch-action: manipulation;
 }
 
 .dpad-btn:hover {
@@ -851,7 +884,7 @@ body {
 }
 
 .dpad-btn.pivot-btn {
-    font-size: 1rem;
+    font-size: clamp(0.85rem, 2vw, 1rem);
     color: var(--text-secondary);
 }
 
@@ -859,7 +892,7 @@ body {
     background: rgba(255, 23, 68, 0.2);
     border-color: var(--accent-red);
     color: #ff5252;
-    font-size: 0.72rem;
+    font-size: clamp(0.65rem, 1.6vw, 0.72rem);
     font-weight: 800;
 }
 
@@ -870,14 +903,15 @@ body {
 }
 
 .dpad-hint {
-    font-size: 0.68rem;
+    font-size: clamp(0.62rem, 1.5vw, 0.68rem);
     color: var(--text-muted);
+    text-align: center;
 }
 
-/* Virtual Joystick */
+/* Virtual 2D Joystick */
 .joystick-pad {
-    width: 190px;
-    height: 190px;
+    width: clamp(160px, 35vw, 190px);
+    height: clamp(160px, 35vw, 190px);
     background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.4) 100%);
     border: 2px solid var(--border-card);
     border-radius: 50%;
@@ -897,8 +931,8 @@ body {
 .joy-cross-v { width: 1px; height: 100%; }
 
 .joystick-knob {
-    width: 60px;
-    height: 60px;
+    width: clamp(48px, 10vw, 60px);
+    height: clamp(48px, 10vw, 60px);
     background: linear-gradient(135deg, #1e88e5 0%, #00b0ff 100%);
     border: 2px solid #fff;
     border-radius: 50%;
@@ -921,16 +955,16 @@ body {
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
-    padding: 10px 14px;
+    padding: 8px 12px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
 }
 
 .speed-header {
     display: flex;
     justify-content: space-between;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--text-secondary);
 }
 
@@ -967,23 +1001,17 @@ body {
 .actuator-controls {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
-@media (max-width: 600px) {
-    .actuator-controls {
-        grid-template-columns: 1fr;
-    }
+    gap: 12px;
 }
 
 .actuator-tile {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-card);
     border-radius: var(--radius-sm);
-    padding: 16px;
+    padding: clamp(12px, 2vw, 16px);
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     transition: all 0.3s ease;
 }
 
@@ -997,12 +1025,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
+    width: clamp(42px, 8vw, 52px);
+    height: clamp(42px, 8vw, 52px);
+    border-radius: 10px;
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-secondary);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .actuator-tile.active .actuator-icon-wrapper {
@@ -1023,17 +1052,21 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
 }
 
 .actuator-title {
-    font-size: 0.8rem;
+    font-size: clamp(0.72rem, 1.8vw, 0.8rem);
     font-weight: 700;
     color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .actuator-status {
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
     font-weight: 800;
     color: #fff;
 }
@@ -1043,15 +1076,17 @@ body {
 }
 
 .actuator-btn {
-    padding: 10px 18px;
+    padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2vw, 18px);
     border: none;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
-    font-size: 0.78rem;
+    font-size: clamp(0.72rem, 1.8vw, 0.78rem);
     font-weight: 800;
     cursor: pointer;
     transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .actuator-btn:hover {
@@ -1070,7 +1105,7 @@ body {
 
 .emergency-btn {
     width: 100%;
-    padding: 18px 24px;
+    padding: clamp(14px, 2.5vw, 18px) clamp(16px, 3vw, 24px);
     background: linear-gradient(135deg, #b71c1c 0%, #d50000 50%, #ff1744 100%);
     border: 2px solid #ff5252;
     border-radius: var(--radius-md);
@@ -1078,7 +1113,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     cursor: pointer;
     box-shadow: 0 6px 20px var(--accent-red-glow);
     transition: all 0.15s ease;
@@ -1095,19 +1130,20 @@ body {
 }
 
 .emergency-icon {
-    font-size: 1.6rem;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
 }
 
 .emergency-text {
-    font-size: 1.15rem;
+    font-size: clamp(1rem, 2.8vw, 1.15rem);
     font-weight: 900;
     letter-spacing: 1px;
 }
 
 .emergency-sub {
-    font-size: 0.68rem;
+    font-size: clamp(0.6rem, 1.6vw, 0.68rem);
     font-family: var(--font-mono);
     color: rgba(255, 255, 255, 0.8);
+    text-align: center;
 }
 
 /* ==========================================================================
@@ -1117,9 +1153,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.72rem;
+    font-size: clamp(0.65rem, 1.6vw, 0.72rem);
     color: var(--text-muted);
-    padding: 8px 4px;
+    padding: 6px 4px;
     flex-wrap: wrap;
     gap: 8px;
 }
@@ -1129,7 +1165,7 @@ body {
 }
 
 /* ==========================================================================
-   SETTINGS MODAL
+   SETTINGS MODAL (RESPONSIVE)
    ========================================================================== */
 .modal-overlay {
     position: fixed;
@@ -1137,13 +1173,13 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.78);
     backdrop-filter: blur(8px);
     display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    padding: 20px;
+    padding: 16px;
 }
 
 .modal-overlay.open {
@@ -1155,7 +1191,9 @@ body {
     border: 1px solid var(--border-card);
     border-radius: var(--radius-md);
     width: 100%;
-    max-width: 440px;
+    max-width: min(440px, 94vw);
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
@@ -1165,12 +1203,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border-card);
 }
 
 .modal-header h3 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: #fff;
 }
 
@@ -1178,25 +1216,26 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     cursor: pointer;
+    line-height: 1;
 }
 
 .modal-body {
-    padding: 20px;
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
 }
 
 .form-group label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
     color: var(--text-secondary);
 }
@@ -1205,10 +1244,10 @@ body {
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid var(--border-card);
     border-radius: 6px;
-    padding: 10px 12px;
+    padding: 9px 12px;
     color: #fff;
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     outline: none;
 }
 
@@ -1217,7 +1256,7 @@ body {
 }
 
 .form-group small {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     color: var(--text-muted);
 }
 
@@ -1231,14 +1270,14 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    padding: 16px 20px;
+    padding: 12px 18px;
     border-top: 1px solid var(--border-card);
 }
 
 .btn-cancel, .btn-save {
     padding: 8px 16px;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
     border: none;
@@ -1255,7 +1294,7 @@ body {
 }
 
 /* ==========================================================================
-   ANIMATIONS & KEYFRAMES
+   KEYFRAME ANIMATIONS
    ========================================================================== */
 @keyframes spin {
     from { transform: rotate(0deg); }
@@ -1276,4 +1315,148 @@ body {
     0% { opacity: 0.4; }
     50% { opacity: 1; }
     100% { opacity: 0.4; }
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+/* TABLETS & MEDIUM SCREENS (<= 850px) */
+@media (max-width: 850px) {
+    .telemetry-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .imu-telemetry-item {
+        grid-column: span 2;
+    }
+}
+
+/* MOBILE PHONES & PORTRAIT SCREENS (<= 768px) */
+@media (max-width: 768px) {
+    .dual-throttle-container {
+        grid-template-areas: 
+            "center center"
+            "left   right";
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .center-controls-column {
+        padding: 4px 0 8px;
+    }
+
+    .slider-wrapper {
+        height: 190px;
+    }
+
+    .vertical-slider {
+        width: 150px;
+    }
+
+    .actuator-controls {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+/* SMALL MOBILE SCREENS (<= 480px) */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 8px 10px 24px;
+        gap: 10px;
+    }
+
+    .app-header {
+        padding: 8px 12px;
+    }
+
+    .status-bar {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .status-pill {
+        padding: 4px 8px;
+    }
+
+    .card {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .telemetry-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .telemetry-item {
+        padding: 10px 8px;
+    }
+
+    .imu-telemetry-item {
+        grid-column: span 2;
+    }
+
+    .inclinometer-widget {
+        width: 52px;
+        height: 52px;
+    }
+
+    .dpad-grid {
+        grid-template-columns: repeat(3, 52px);
+        grid-template-rows: repeat(3, 52px);
+        gap: 5px;
+    }
+
+    .joystick-pad {
+        width: 160px;
+        height: 160px;
+    }
+
+    .slider-wrapper {
+        height: 170px;
+    }
+
+    .vertical-slider {
+        width: 130px;
+    }
+
+    .emergency-btn {
+        padding: 14px 16px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* LANDSCAPE ORIENTATION FOR MOBILE (height <= 500px) */
+@media (max-height: 500px) and (orientation: landscape) {
+    .app-container {
+        padding: 6px 12px 20px;
+        gap: 8px;
+    }
+
+    .dual-throttle-container {
+        grid-template-areas: "left center right";
+        grid-template-columns: 110px 1fr 110px;
+    }
+
+    .slider-wrapper {
+        height: 150px;
+    }
+
+    .vertical-slider {
+        width: 120px;
+    }
+
+    .joystick-pad {
+        width: 140px;
+        height: 140px;
+    }
+
+    .dpad-grid {
+        grid-template-columns: repeat(3, 46px);
+        grid-template-rows: repeat(3, 46px);
+    }
 }
