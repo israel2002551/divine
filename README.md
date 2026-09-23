@@ -168,3 +168,110 @@ python -m http.server 8000
 npx serve .
 ```
 Then navigate to `http://localhost:8000`.
+
+---
+
+# AquaSense AI Water Quality Diagnostic Station 🧪💧
+
+An intelligent IoT water diagnostics platform powered by ESP32, Groq Cloud LPU AI (`llama-3.1-8b-instant`), an I2C 16x2 LCD display, and real-time MQTT streaming (`broker.emqx.io`). Accompanied by a dedicated dark aquatic glassmorphism web dashboard in `water_web/`.
+
+## 📐 System Architecture
+
+```mermaid
+flowchart LR
+    subgraph Frontend ["AquaSense Web Dashboard (water_web/)"]
+        Dashboard["Real-Time Dashboard\n(Chart.js, Telemetry Gauges)"]
+        WSClient["MQTT.js WebSocket\n(Port 8084 WSS)"]
+        Dashboard <--> WSClient
+    end
+
+    subgraph Broker ["EMQX Public Cloud Broker"]
+        EMQX["broker.emqx.io\n(1883 TCP / 8084 WSS)"]
+    end
+
+    subgraph Hardware ["AquaSense IoT Station (ESP32)"]
+        Core0["Core 0: Network & AI\n- Groq HTTPS (llama-3.1)\n- MQTT PubSubClient"]
+        Core1["Core 1: Sensor & Display\n- pH ADC1 Sampling (EMA)\n- I2C 16x2 LCD Display"]
+        Sensors["Analog pH Sensor (GPIO 34)\nTurbidity / TDS Sensors"]
+        LCD["I2C LCD 16x2 (0x27)\n(SDA 21 / SCL 22)"]
+
+        Sensors --> Core1
+        Core1 --> LCD
+        Core1 <== "Mutex Shared State" ==> Core0
+    end
+
+    subgraph GroqCloud ["Groq Cloud LPU Inference"]
+        Groq["api.groq.com\nModel: llama-3.1-8b-instant"]
+    end
+
+    Core0 <== "HTTPS / REST" ==> Groq
+    Core0 <== "tcp://broker.emqx.io:1883" ==> EMQX
+    EMQX <== "wss://broker.emqx.io:8084/mqtt" ==> WSClient
+```
+
+## ⚡ Hardware Pinout & Wiring
+
+> [!IMPORTANT]
+> **ESP32 ADC2 / Wi-Fi Hardware Conflict**:
+> The analog pH sensor is connected to **GPIO 34** (`ADC1_CH6`). Do **NOT** use GPIO 4, 2, or 15 (`ADC2`) because the ESP32 Wi-Fi hardware permanently disables ADC2 while the radio is transmitting.
+
+| Component | Pin (ESP32) | Protocol / Type | Notes |
+| :--- | :---: | :--- | :--- |
+| **Analog pH Probe** | **GPIO 34** | ADC1 Analog Input | 12-bit ADC with 10-sample median + EMA filter |
+| **I2C LCD SDA** | **GPIO 21** | Hardware I2C | PCF8574 I2C Backpack (address `0x27` or `0x3F`) |
+| **I2C LCD SCL** | **GPIO 22** | Hardware I2C | 100 kHz standard / 400 kHz fast mode |
+| **LCD Power** | **5V / VIN** | Power | Most I2C LCD backpacks require 5V for backlight |
+
+## 🧪 Scientific Calibration & Math
+
+### Corrected pH Formula
+Two-point calibration uses buffer solutions at pH 7.00 and pH 4.01:
+$$\text{Slope } (V/\text{pH}) = \frac{V_{\text{pH7}} - V_{\text{pH4}}}{7.0 - 4.0} = \frac{2.50\text{V} - 1.95\text{V}}{3.0} \approx 0.1833\,\text{V/pH}$$
+$$\text{pH} = 7.0 - \frac{V_{\text{pH7}} - V_{\text{sensor}}}{\text{Slope}}$$
+
+### Weighted WHO / EPA Water Quality Index (WQI)
+The overall potability index ($0 - 100$) computes sub-indices for pH ($40\%$), Turbidity ($35\%$), and TDS ($25\%$):
+$$\text{WQI} = (Q_{\text{pH}} \times 0.40) + (Q_{\text{turbidity}} \times 0.35) + (Q_{\text{TDS}} \times 0.25)$$
+- **90–100**: Excellent (Safe drinking)
+- **70–89**: Good (Safe)
+- **50–69**: Fair (Boil / filtration recommended)
+- **25–49**: Poor
+- **<25**: Unfit for consumption
+
+## 🤖 Groq Cloud LPU AI Integration
+- **Endpoint**: `https://api.groq.com/openai/v1/chat/completions`
+- **Model**: `llama-3.1-8b-instant` (ultra-low latency LPU inference under 250ms)
+- **Prompting**: Evaluates real-time pH, turbidity, TDS, and WQI score into concise 12-word diagnostic summaries displayed cyclically on Row 1 of the I2C LCD and streamed to the dashboard banner.
+
+## 📡 MQTT Telemetry Topic
+* **Topic**: `waterquality/station1/telemetry`
+* **Broker**: `broker.emqx.io` (Port 1883 TCP, Port 8084 WSS)
+* **Sample Payload**:
+```json
+{
+  "station_id": "station1",
+  "uptime": 240,
+  "ph": 7.15,
+  "voltage": 2.527,
+  "turbidity_ntu": 0.6,
+  "tds_ppm": 108,
+  "wqi": 100,
+  "wqi_rating": "Excellent",
+  "free_heap": 182400,
+  "ai_summary": "Water meets WHO & EPA potability parameters. pH and minerals ideal for consumption."
+}
+```
+
+## 🌐 Web Dashboard (`water_web/`)
+- Located in `water_web/` (`index.html`, `style.css`, `app.js`).
+- Open `water_web/index.html` directly in your browser or run:
+  ```bash
+  python -m http.server 8081 --directory water_web
+  ```
+- Features:
+  - Real-time time-series Chart.js graph with tab switching (pH Level with WHO 6.5–8.5 safe band, WQI Score 0–100, and Turbidity & TDS dual-axis).
+  - Linear spectrum pH needle gauge with safe zone boundaries.
+  - WQI gradient progress meter and turbidity/TDS level indicator chips.
+  - Hero AI diagnostic banner with Groq Llama 3.1 model badge and potability indicators.
+  - Session statistics (Min/Max pH, Avg pH, Avg WQI, Sample counter) and CSV telemetry log exporter.
+  - Connection settings modal for custom brokers and station IDs.
